@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en" ng-app>
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Shiny Bash</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/moon.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/monokai_sublime.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+        document.write('<link rel="stylesheet" href="css/print/' + ( window.location.search.match(/print-pdf/gi) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">');
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body ng-controller="DemoController">
+
+<div class="reveal">
+
+<!-- Any section element inside of this container is displayed as a slide -->
+<div class="slides">
+
+
+<section>
+    <img style="border: none; background: none;box-shadow:none;" src="images/instil-logo.png">
+    <h1>Shiny Bash</h1>
+    <p>
+        <small>Created by David McFarland and Garth Gilmore using Reveal.js.</small>
+    </p>
+</section>
+
+
+<section>
+    <h2>Agenda</h2>
+    <ul>
+        <li>~15 mintues on a shiny new build tool.</li>
+        <li>~15 mintues on a shiny new web framework.</li>
+    </ul>
+    <p>
+        <small>Shiny and new are relative terms both technologies have be about since 2009.</small>
+    </p>
+</section>
+
+
+<section>
+    <h2>Part 1</h2>
+
+    <h3>Build tools</h3>
+</section>
+
+
+<section data-background="#ffffff">
+    <img style="border: none; background: white;box-shadow:none;" src="images/ant-logo.png"/>
+</section>
+
+
+<section>
+    <h2>Tasks</h2>
+	<pre><code data-trim contenteditable>
+&lt;target name=&quot;compile&quot; description=&quot;Compile source tree java files&quot;&gt;
+	&lt;mkdir dir=&quot;${build.dir}&quot;/&gt;
+	&lt;javac destdir=&quot;${build.dir}&quot; source=&quot;1.5&quot; target=&quot;1.5&quot;&gt;
+		&lt;src path=&quot;${src.dir}&quot;/&gt;
+		&lt;classpath refid=&quot;master-classpath&quot;/&gt;
+	&lt;/javac&gt;
+&lt;/target&gt;</code></pre>
+</section>
+
+
+<section>
+    <h2>Targets</h2>
+	<pre><code data-trim contenteditable>
+&lt;project name=&quot;Hello World Project&quot; default=&quot;greetTheWorld&quot;&gt;
+	&lt;target name=&quot;greetTheWorld&quot; depends=&quot;prepare&quot;&gt;
+		&lt;echo&gt;Hello World!&lt;/echo&gt;
+	&lt;/target&gt;
+	&lt;target name=&quot;prepare&quot;&gt;
+		&lt;echo&gt;Preparing to greet the world...&lt;/echo&gt;
+	&lt;/target&gt;
+&lt;/project&gt;</code></pre>
+</section>
+
+
+<section data-background="#ffffff">
+    <img style="border: none; background: white;box-shadow:none;" src="images/maven-logo.gif"/>
+</section>
+
+
+<section>
+    <h2>Simple Maven Build</h2>
+	<pre><code data-trim contenteditable>
+&lt;project&gt;
+	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+	&lt;groupId&gt;com.instil&lt;/groupId&gt;
+	&lt;artifactId&gt;BuildingWithMaven&lt;/artifactId&gt;
+	&lt;packaging&gt;jar&lt;/packaging&gt;
+	&lt;version&gt;0.1&lt;/version&gt;
+	&lt;name&gt;BuildingWithMaven&lt;/name&gt;
+	&lt;dependencies&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;junit&lt;/groupId&gt;
+			&lt;artifactId&gt;junit&lt;/artifactId&gt;
+			&lt;version&gt;4.10&lt;/version&gt;
+			&lt;scope&gt;test&lt;/scope&gt;
+		&lt;/dependency&gt;
+	&lt;/dependencies&gt;
+&lt;/project&gt;</code></pre>
+</section>
+
+
+<section>
+    <h2>Maven repository layout</h2>
+	<pre><code data-trim contenteditable>
+├── archetype-catalog.xml
+├── repository
+│   ├── antlr
+│   │   └── antlr
+│   │   ├── 2.7.2
+│   │   │   ├── _maven.repositories
+│   │   │   ├── antlr-2.7.2.jar
+│   │   │   ├── antlr-2.7.2.jar.sha1
+│   │   │   ├── antlr-2.7.2.pom
+│   │   │   └── antlr-2.7.2.pom.sha1
+│   │   ├── 2.7.6
+│   │   │   ├── _maven.repositories
+│   │   │   ├── antlr-2.7.6.jar
+│   │   │   ├── antlr-2.7.6.jar.sha1
+│   │   │   ├── antlr-2.7.6.pom
+│   │   │   └── antlr-2.7.6.pom.sha1</code></pre>
+</section>
+
+
+<section data-background="#ffffff">
+    <img style="border: none; background: white;box-shadow:none;" src="images/gradle-logo.png"/>
+</section>
+
+
+<section>
+    <h2>Simple Gradle Build</h2>
+	<pre><code data-trim contenteditable>
+apply plugin: 'java'
+
+group = 'com.instil'
+version = 0.1
+
+repositories { mavenCentral() }
+
+dependencies {
+	compile 'commons-lang:commons-lang:2.6'
+	testCompile 'junit:junit:4.10'
+	testCompile 'org.hamcrest:hamcrest-all:1.3'
+	testCompile "org.mockito:mockito-all:1.9.5"
+	testCompile('com.googlecode.lambdaj:lambdaj:2.3.3') {
+		exclude module: 'mockito-all'
+	}
+}</code></pre>
+</section>
+
+
+<section data-background="#ffffff">
+    <img style="border: none; background: white;box-shadow:none;" src="images/three-bears.jpg" width="325px"
+         height="398px"/>
+    <p class="fragment">Ant - too flexible</p>
+    <p class="fragment">Maven - too strict</p>
+    <p class="fragment">Gradle - just right... for now</p>
+</section>
+
+
+<section>
+    <h2>Part 2</h2>
+    <h3>The magical world of AngularJS...</h3>
+</section>
+
+
+<section>
+    <h2>Early DOM manipulation</h2>
+    <pre><code data-trim contenteditable>
+document.getElementById("printable-content")
+document.getElementsByName("box")
+document.getElementsByTag("TR")</code></pre>
+</section>
+
+
+<section>
+    <h2>Early DOM manipulation (cont.)</h2>
+    <pre><code data-trim contenteditable>
+function findMatchingElements(elements, type) {
+    var matchingElements = [];
+    if (elements.hasChildNodes()) {
+      var child = elements.firstChild;
+      while (child) {
+        if (child.nodeType === 1 && child.tagName == type) {
+          matchingElements += findMatchingElements(child)
+        }
+        child = child.nextSibling;
+      }
+    }
+    return matchingElements;
+}
+var printableContentElement =  document.getElementById('printable-content');
+var matchingTables = findMatchingElements(printableContentElement, 'TABLE');</code></pre>
+</section>
+
+
+<section data-background="#ffffff">
+    <img style="border: none; background: white;box-shadow:none;" src="images/jquery-logo.png"/>
+</section>
+
+
+<section>
+    <h2>Selectors and event listeners</h2>
+    <pre><code data-trim contenteditable>
+$( "#printable-content table" ).hide();
+
+$( "#foo" ).bind( "mouseenter mouseleave", function() {
+  $( this ).toggleClass( "entered" );
+});</code></pre>
+</section>
+
+
+<section data-background="#ffffff">
+    <img style="border: none; background: white;box-shadow:none;" src="images/angularjs-logo.png"/>
+</section>
+
+
+<section>
+ 	<h2>Templates</h2>
+	<pre><code data-trim contenteditable>
+&lt;html ng-app&gt;
+ 	&lt;body ng-controller=&quot;DemoController&quot;&gt;
+   		&lt;input ng-model=&quot;name&quot; placeholder=&quot;Enter name&quot;/&gt;
+   		&lt;button ng-click=&quot;generateRandomName()&quot;/&gt;
+   		&lt;script src=&quot;angular.js&quot;/&gt;
+	&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</section>
+
+
+<section>
+ 	<h2>MVC</h2>
+</section>
+
+
+<section>
+ 	<h2>Directives</h2>
+</section>
+
+
+<section>
+ 	<h2>Two way bindings</h2>
+    <input type="number" style="font-size:32px" ng-model="number1" placeholder="Enter a number">
+    <label> + </label>
+    <input type="number" style="font-size:32px" ng-model="number2" placeholder="Enter a number">
+    <label> = </label>
+    {{number1 + number2}}
+
+	<pre><code data-trim contenteditable>
+&lt;input type=&quot;number&quot; ng-model=&quot;number1&quot; placeholder=&quot;Enter a number&quot;&gt;
+&lt;label&gt; + &lt;/label&gt;
+&lt;input type=&quot;number&quot; ng-model=&quot;number2&quot; placeholder=&quot;Enter a number&quot;&gt;
+&lt;label&gt; = &lt;/label&gt;
+{&zwnj;{number1 + number2}&zwnj;}</code></pre>
+</section>
+
+<section>
+ 	<h2>Single page application</h2>
+ 	Routing...
+</section>
+
+<section>
+ 	<h2>Testing</h2>
+ 	Karma...
+</section>
+
+
+<section>
+ 	<h2>Animation and Validation</h2>
+ 	Form - form dirty - form invalid
+
+ 	ngAnimation on adding items to list ng-repeat...	
+</section>
+
+
+<section>
+    <h1>THE END</h1>
+</section>
+
+
+</div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.min.js"></script>
+<script src="angular.js"></script>
+<script src="demo.js"></script>
+
+<script>
+
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: false,
+        progress: true,
+        history: true,
+        center: true,
+
+        width: 960,
+        height: 700,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+            { src: 'lib/js/classList.js', condition: function () {
+                return !document.body.classList;
+            } },
+            { src: 'plugin/markdown/marked.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            } },
+            { src: 'plugin/markdown/markdown.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            } },
+            { src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+                hljs.initHighlightingOnLoad();
+            } },
+            { src: 'plugin/zoom-js/zoom.js', async: true, condition: function () {
+                return !!document.body.classList;
+            } },
+            { src: 'plugin/notes/notes.js', async: true, condition: function () {
+                return !!document.body.classList;
+            } }
+        ]
+    });
+
+
+</script>
+
+</body>
+</html>
