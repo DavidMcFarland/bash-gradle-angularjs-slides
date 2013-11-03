@@ -46,7 +46,7 @@ Please note both technologies where release in 2009... AngularJs is just a large
 
 * Gradle is the latest step in the build tool evolution.
 * Don't take my word for this look at some of the main stream open source projects using gradle.
-* Hibernate, Spring Framework, Google (Its the default Android build system replacing Ant and ADT earlier this year), JBoss, LinkedIn, Netflix, Mockito.
+* Hibernate, Spring Framework, Google (Its the default Android build system replacing Ant and ADT earlier this year), LinkedIn, Netflix, Mockito.
 * Thoughtworks have move gradle as a techonology to adopt in there last technology radar.
 
 * So what does gradle offer that Maven doesn't:
@@ -56,7 +56,6 @@ Please note both technologies where release in 2009... AngularJs is just a large
 ** Real support for incremental build including self authored tasks.
 ** Gradle wrapper.
 ** Easy call into lifecycle - one jar... Dropwizard.
-
 
 ** There are plugins for supporting all major JVM languages, C++ and iOS apps.
 ** Some tasks for converting from Maven to gradle - they are still incubating and so far I haven't seen how well they work..

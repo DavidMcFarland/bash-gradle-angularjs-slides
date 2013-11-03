@@ -48,7 +48,7 @@
 
 
 <section>
-    <h2>Agenda</h2>
+    <h2>Outline</h2>
     <ul>
         <li>~15 mintues on a shiny new build tool.</li>
         <li>~15 mintues on a shiny new web framework.</li>
@@ -152,6 +152,25 @@
 </section>
 
 
+<section data-background="#ffffff">
+	<h2 style="color: #333333;">Who's using Gradle</h2>
+    <img style="border: none; background: white;box-shadow:none;" src="images/mockito-logo.jpg"/>
+    <img style="border: none; background: white;box-shadow:none;" src="images/spring-logo.png"/>
+    <img style="border: none; background: white;box-shadow:none;" src="images/hibernate-logo.png"/>
+    <img style="border: none; background: white;box-shadow:none;" src="images/netflix-logo.jpeg"/>
+    <img style="border: none; background: white;box-shadow:none;" src="images/android-logo.png"/>
+    <img style="border: none; background: white;box-shadow:none;" src="images/linkedin-logo.png"/>
+</section>
+
+<section>
+	<h2>Thoughtworks Technology Radar</h2>
+	<p>Gradle - Adopt</p>
+    <p>Maven - Proceed with caution</p>
+	<blockquote>
+	Language-based build tools like Gradle and Rake continue to offer finer-grained abstractions and more flexibility long term than XML and plug-in based tools like Ant and Maven. This allows them to grow gracefully as projects become more complex.
+	</blockquote>
+</section>
+
 <section>
     <h2>Simple Gradle Build</h2>
 	<pre><code data-trim contenteditable>
@@ -170,6 +189,101 @@ dependencies {
 	testCompile('com.googlecode.lambdaj:lambdaj:2.3.3') {
 		exclude module: 'mockito-all'
 	}
+}</code></pre>
+</section>
+
+
+<section>
+    <h2>Building a jar containing all dependencies</h2>
+	<pre><code data-trim contenteditable>
+jar {
+  from(configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }) 
+  {
+      exclude "META-INF/*.SF"
+      exclude "META-INF/*.DSA"
+      exclude "META-INF/*.RSA"
+  }
+}</code></pre>
+</section>
+
+
+<section>
+    <h2>Global depedency exclusion</h2>
+	<pre><code data-trim contenteditable>
+configurations {
+    compile.exclude module: 'slf4j-log4j12'
+    compile.exclude module: 'servlet-api'
+    migrationCompile {
+        extendsFrom compile
+    }
+}</code></pre>
+</section>
+
+
+<section>
+    <h2>Directed Acyclic Graph</h2>
+    <img style="border: none; background: white;box-shadow:none;"  src="images/gradle-java-plugin.png"/>
+</section>
+
+
+<section>
+    <h2>Incremental Build</h2>
+	<pre><code data-trim contenteditable>
+task transform {
+    ext.srcFile = file('mountains.xml')
+    ext.destDir = new File(buildDir, 'generated')
+    inputs.file srcFile
+    outputs.dir destDir
+    doLast {
+        println "Transforming source file."
+        destDir.mkdirs()
+        def mountains = new XmlParser().parse(srcFile)
+        mountains.mountain.each { mountain ->
+            def name = mountain.name[0].text()
+            def height = mountain.height[0].text()
+            def destFile = new File(destDir, "${name}.txt")
+            destFile.text = "$name -> ${height}\n"
+        }
+    }
+}</code></pre>
+</section>
+
+
+<section>
+    <h2>Additional source sets</h2>
+	<pre><code data-trim contenteditable>
+sourceSets {
+    migration {
+        compileClasspath += sourceSets.main.runtimeClasspath
+    }
+    integrationTest {
+    	compileClasspath += sourceSets.test.runtimeClasspath
+    }
+
+	dependencies {
+    	migrationCompile 'net.sourceforge.jtds:jtds:1.3.1'
+    }
+
+}</code></pre>
+</section>
+
+
+<section>
+    <h2>Run a dropwizard application</h2>
+	<pre><code data-trim contenteditable>
+task run(type: JavaExec, description: "Start Demo application") {
+    classpath project.sourceSets.main.runtimeClasspath
+    main = "com.instil.DemoService"
+    args = ["server", "./src/main/resources/config_development.yml"]
+}</code></pre>
+</section>
+
+
+<section>
+    <h2>Gradle Wrapper</h2>
+	<pre><code data-trim contenteditable>
+task wrapper(type: Wrapper, description: 'Generate gradle wrapper') {
+    gradleVersion = '1.9'
 }</code></pre>
 </section>
 
