@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="DemoModule">
 
 <head>
     <meta charset="utf-8">
@@ -14,8 +14,10 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
+	<link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/reveal.min.css">
     <link rel="stylesheet" href="css/theme/moon.css" id="theme">
+    <link rel="stylesheet" href="css/demo.css">
 
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="lib/css/monokai_sublime.css">
@@ -30,7 +32,7 @@
     <![endif]-->
 </head>
 
-<body ng-controller="DemoController">
+<body>
 
 <div class="reveal">
 
@@ -355,6 +357,18 @@ $( "#foo" ).bind( "mouseenter mouseleave", function() {
 </section>
 
 
+
+<section ng-controller="DemoController">
+ 	<h2>Reverse Filter</h2>
+    <div>
+    <input type="text" ng-model="name" placeholder="Enter a name">
+    </div>
+    <span>Reversed Name: {{name | reverse}}</span>
+
+    //TODO ADD CODE
+</section>
+
+
 <section>
  	<h2>Templates</h2>
 	<pre><code data-trim contenteditable>
@@ -367,22 +381,16 @@ $( "#foo" ).bind( "mouseenter mouseleave", function() {
 &lt;/html&gt;</code></pre>
 </section>
 
-
-<section>
- 	<h2>MVC</h2>
-</section>
-
-
 <section>
  	<h2>Directives</h2>
 </section>
 
 
-<section>
+<section ng-controller="DemoController">
  	<h2>Two way bindings</h2>
-    <input type="number" style="font-size:32px" ng-model="number1" placeholder="Enter a number">
+    <input type="number" ng-model="number1" placeholder="Enter a number">
     <label> + </label>
-    <input type="number" style="font-size:32px" ng-model="number2" placeholder="Enter a number">
+    <input type="number" ng-model="number2" placeholder="Enter a number">
     <label> = </label>
     {{number1 + number2}}
 
@@ -391,12 +399,66 @@ $( "#foo" ).bind( "mouseenter mouseleave", function() {
 &lt;label&gt; + &lt;/label&gt;
 &lt;input type=&quot;number&quot; ng-model=&quot;number2&quot; placeholder=&quot;Enter a number&quot;&gt;
 &lt;label&gt; = &lt;/label&gt;
-{&zwnj;{number1 + number2}&zwnj;}</code></pre>
+{&zwnj;{number1 + number2}&zwnj;} //Angular Markup</code></pre>
+</section>
+
+
+<section>
+<h2>Todo list Filter</h2>
+	<div ng-controller="DemoController">
+		<div class="box">
+		<span>Filter By:</span> 
+		<input type="text" ng-model="search" placeholder="filter">
+		</div>
+		<div>
+		<ul class="unstyled" style="list-style: none">
+		<li ng-repeat="todo in todos | filter:search" ng-animate="'animate'">
+			<input type="checkbox" ng-model="todo.done" ng-animate="'rotate'">
+			<span class="done-{{todo.done}}">{{todo.text}}</span>
+		</li>
+		</ul>
+		</div>		
+	</div>
 </section>
 
 <section>
- 	<h2>Single page application</h2>
- 	Routing...
+<h2>Todo list</h2>
+	<div ng-controller="DemoController">
+		<div>
+		<span>{{remaining()}} of {{todos.length}} remaining</span>
+		</div>
+		<div>
+		<ul class="unstyled" style="list-style: none">
+		<li ng-repeat="todo in todos | filter:search" ng-animate="'animate'">
+			<input type="checkbox" ng-model="todo.done" ng-animate="'rotate'">
+			<span class="done-{{todo.done}}">{{todo.text}}</span>
+		</li>
+		</ul>
+		</div>
+		<div>
+		<form ng-submit="addTodo()">
+			<input type="text" ng-model="todoText"
+			   placeholder="new todo">
+			<input class="btn btn-primary" type="submit" value="add">
+			<input class="btn btn-danger" ng-click="archive()" value="remove completed"/>
+		</form>
+		</div>
+	</div>
+</section>
+
+<section>
+ 	<h2>MVC</h2>
+</section>
+
+<section>
+ 	<h2>Single page application</h2> 
+	<pre><code data-trim contenteditable> 		
+$routeProvider.when('/demo/upload',
+{
+	templateUrl: 'partials/upload.html',
+	controller: 'UploadCtrl',
+	access: access.admin // A customized extension to AngularJS
+});</code></pre>
 </section>
 
 <section>
@@ -406,10 +468,21 @@ $( "#foo" ).bind( "mouseenter mouseleave", function() {
 
 
 <section>
- 	<h2>Animation and Validation</h2>
- 	Form - form dirty - form invalid
+ 	<h2>Validation</h2>
+ 	<div ng-controller="DemoController">
+ 	<div ng-form="simpleForm" class="row">
+        <div class="span12">
+        	<input type="email" ng-model="user.email" placeholder="Valid email address"/>
+		</div>
+		<br>
+		 <div class="span12">
+	        <span class="label label-info" style="padding:.2em .6em .3em" ng-show="simpleForm.$dirty">Dirty</span>
+	        <span class="label label-info" style="padding:.2em .6em .3em" ng-show="simpleForm.$valid">Valid</span>
+        </div>
+     </div>
+  	</div>
 
- 	ngAnimation on adding items to list ng-repeat...	
+ 	
 </section>
 
 

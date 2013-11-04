@@ -1,7 +1,23 @@
+angular.module('DemoModule', []).
+  filter('reverse', function() {
+    return function(input) {
+      var out = "";
+      for (var i = 0; i < input.length; i++) {
+        out = input.charAt(i) + out;
+      }
+      return out;
+    }
+  });
+
 function DemoController($scope) {
+  $scope.name = "Jeih";
+
+
   $scope.todos = [
-    {text:'learn angular', done:true},
-    {text:'build an angular app', done:false}];
+    {text:'get on plane', done:true},
+    {text:'visit tibet', done:false},
+    {text:'find the blue sheep', done:false},
+    {text:'take picture of blue sheep', done:false}];
  
   $scope.addTodo = function() {
     $scope.todos.push({text:$scope.todoText, done:false});
