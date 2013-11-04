@@ -42,7 +42,7 @@
     <img style="border: none; background: none;box-shadow:none;" src="images/instil-logo.png">
     <h1>Shiny Bash</h1>
     <p>
-        <small>Created by David McFarland and Garth Gilmore using Reveal.js.</small>
+        <small>Created by David McFarland and Garth Gilmour using Reveal.js.</small>
     </p>
 </section>
 
@@ -208,7 +208,7 @@ jar {
 
 
 <section>
-    <h2>Global depedency exclusion</h2>
+    <h2>Global dependency exclusion</h2>
 	<pre><code data-trim contenteditable>
 configurations {
     compile.exclude module: 'slf4j-log4j12'
@@ -259,10 +259,11 @@ sourceSets {
     integrationTest {
     	compileClasspath += sourceSets.test.runtimeClasspath
     }
+}
 
-	dependencies {
-    	migrationCompile 'net.sourceforge.jtds:jtds:1.3.1'
-    }
+dependencies {
+	migrationCompile 'net.sourceforge.jtds:jtds:1.3.1'
+}
 
 }</code></pre>
 </section>
