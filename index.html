@@ -407,6 +407,19 @@ document.querySelectorAll("#score>tbody>tr>td:nth-of-type(2)")
     <img style="height: 560px; wdith: 383px" src="images/concepts-controller.png">
 </section>
 
+<section>
+    <h2>Angular Scopes</h2>
+    <img style="height: 560px; wdith: 383px; background: white;box-shadow:none;" src="images/concepts-scope.png">
+</section>
+
+<section>
+    <h2>Batarang</h2>
+    <img style="height: 560px; wdith: 383px" src="images/AngularJS-Batarang.png">
+</section>
+
+
+
+
 <section ng-controller="DemoController">
     <h2>Two way bindings</h2>
     <input type="number" ng-model="number1" placeholder="Enter a number">
@@ -498,7 +511,7 @@ $scope.todos = [
     &lt;input type=&quot;text&quot; ng-model=&quot;todoText&quot;
        placeholder=&quot;new todo&quot;&gt;
     &lt;input class=&quot;btn btn-primary&quot; type=&quot;submit&quot; value=&quot;add&quot;&gt;
-    &lt;input class=&quot;btn btn-danger&quot; ng-click=&quot;archive()&quot; value=&quot;remove completed&quot;/&gt;
+    &lt;input class=&quot;btn btn-danger&quot; ng-click=&quot;removeCompleted()&quot; value=&quot;remove completed&quot;/&gt;
 &lt;/form&gt;</code></pre>
 </section>
 
@@ -546,6 +559,14 @@ filter('reverse', function() {
 
 
 <section>
+    <h2>Testing</h2>
+    <p class="fragment">:) Seperation of concerns.</p>
+    <p class="fragment">:) Karma a test tool built around AngularJS.</p>
+    <p class="fragment">:( Over complex to configure</p>
+    <p class="fragment">:( Testing requires preinstalled tools and gems.</p>
+</section>
+
+<section>
  	<h2>Single page application</h2> 
 	<pre><code data-trim contenteditable> 		
 $routeProvider.when('/demo/upload',
@@ -570,17 +591,16 @@ $routeProvider.when('/demo/upload',
             <span class="label label-info" style="padding:.2em .6em .3em" ng-show="simpleForm.$valid">Valid</span>
         </div>
      </div>
-    </div>  
+    </div> 
+    <br>
+    <pre><code data-trim contenteditable>       
+&lt;input type=&quot;email&quot; ng-model=&quot;user.email&quot; placeholder=&quot;Valid email address&quot;/&gt;
+&lt;span class=&quot;label label-info&quot; ng-show=&quot;simpleForm.$dirty&quot;&gt;Dirty&lt;/span&gt;
+&lt;span class=&quot;label label-info&quot; ng-show=&quot;simpleForm.$valid&quot;&gt;Valid&lt;/span&gt;</code></pre>    
 </section>
 
 
-<section>
- 	<h2>Testing</h2>
- 	<p class="fragment">:) Seperation of concerns.</p>
-    <p class="fragment">:) Karma a test tool built around AngularJS.</p>
-    <p class="fragment">:( Over complex to configure</p>
-    <p class="fragment">:( Testing requires preinstalled tools and gems.</p>
-</section>
+
 
 
 <section>
