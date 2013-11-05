@@ -385,11 +385,26 @@ $( "#printable-content table" ).hide();
 $( "#foo" ).bind( "mouseenter mouseleave", function() {
   $( this ).toggleClass( "entered" );
 });</code></pre>
+
+ <pre><code data-trim contenteditable>
+document.querySelectorAll("#score>tbody>tr>td:nth-of-type(2)")
+</code></pre>
+
 </section>
 
 
 <section data-background="#ffffff">
     <img style="border: none; background: white;box-shadow:none;" src="images/angularjs-logo.png"/>
+</section>
+
+<section>
+    <h2>MVC and MVVM</h2>
+    <img src="images/mvvm.png">
+</section>
+
+<section>
+    <h2>Angular MVC</h2>
+    <img style="height: 560px; wdith: 383px" src="images/concepts-controller.png">
 </section>
 
 <section ng-controller="DemoController">
@@ -441,7 +456,7 @@ $( "#foo" ).bind( "mouseenter mouseleave", function() {
         &lt;span class=&quot;done-{{todo.done}}&quot;&gt;{{todo.text}}&lt;/span&gt;
     &lt;/li&gt;
     &lt;/ul&gt;
-&lt;/div&gt;/</code></pre>
+&lt;/div&gt;</code></pre>
 
     <pre><code data-trim contenteditable>
 $scope.todos = [
@@ -449,6 +464,60 @@ $scope.todos = [
     {text:'visit tibet', done:false},
     {text:'find the blue sheep', done:false},
     {text:'take picture of blue sheep', done:false}];</code></pre>
+</section>
+
+<section>
+<h2>Todo list</h2>
+    <div ng-controller="DemoController">
+        <div>
+        <span>{{remaining()}} of {{todos.length}} remaining</span>
+        </div>
+        <div>
+        <ul class="unstyled" style="list-style: none">
+        <li ng-repeat="todo in todos | filter:search" ng-animate="'animate'">
+            <input type="checkbox" ng-model="todo.done" ng-animate="'rotate'">
+            <span class="done-{{todo.done}}">{{todo.text}}</span>
+        </li>
+        </ul>
+        </div>
+        <div>
+        <form ng-submit="addTodo()">
+            <input type="text" ng-model="todoText"
+               placeholder="new todo">
+            <input class="btn btn-primary" type="submit" value="add">
+            <input class="btn btn-danger" ng-click="archive()" value="remove completed"/>
+        </form>
+        </div>
+    </div>
+</section>
+
+<section ng-controller="DemoController">
+    <h2>View</h2>
+    <pre><code data-trim contenteditable>
+&lt;form ng-submit=&quot;addTodo()&quot;&gt;
+    &lt;input type=&quot;text&quot; ng-model=&quot;todoText&quot;
+       placeholder=&quot;new todo&quot;&gt;
+    &lt;input class=&quot;btn btn-primary&quot; type=&quot;submit&quot; value=&quot;add&quot;&gt;
+    &lt;input class=&quot;btn btn-danger&quot; ng-click=&quot;archive()&quot; value=&quot;remove completed&quot;/&gt;
+&lt;/form&gt;</code></pre>
+</section>
+
+
+<section ng-controller="DemoController">
+    <h2>Controller</h2>
+    <pre><code data-trim contenteditable>
+$scope.addTodo = function() {
+    $scope.todos.push({text:$scope.todoText, done:false});
+    $scope.todoText = '';
+};
+
+$scope.removeCompleted = function() {
+    var oldTodos = $scope.todos;
+    $scope.todos = [];
+    angular.forEach(oldTodos, function(todo) {
+        if (!todo.done) $scope.todos.push(todo);
+    });
+};</code></pre>
 </section>
 
 
@@ -459,44 +528,22 @@ $scope.todos = [
     </div>
     <span>Reversed Name: {{name | reverse}}</span>
 
-    //TODO ADD CODE
+    <pre><code data-trim contenteditable>
+&lt;input type=&quot;text&quot; ng-model=&quot;name&quot; placeholder=&quot;Enter a name&quot;&gt;
+&lt;span&gt;Reversed Name: {&zwnj;{name | reverse}&zwnj;}&lt;/span&gt;</code></pre>
+
+    <pre><code data-trim contenteditable>
+filter('reverse', function() {
+    return function(input) {
+      var out = "";
+      for (var i = 0; i < input.length; i++) {
+        out = input.charAt(i) + out;
+      }
+      return out;
+    }
+  });</code></pre>
 </section>
 
-
-
-
-
-
-
-<section>
-<h2>Todo list</h2>
-	<div ng-controller="DemoController">
-		<div>
-		<span>{{remaining()}} of {{todos.length}} remaining</span>
-		</div>
-		<div>
-		<ul class="unstyled" style="list-style: none">
-		<li ng-repeat="todo in todos | filter:search" ng-animate="'animate'">
-			<input type="checkbox" ng-model="todo.done" ng-animate="'rotate'">
-			<span class="done-{{todo.done}}">{{todo.text}}</span>
-		</li>
-		</ul>
-		</div>
-		<div>
-		<form ng-submit="addTodo()">
-			<input type="text" ng-model="todoText"
-			   placeholder="new todo">
-			<input class="btn btn-primary" type="submit" value="add">
-			<input class="btn btn-danger" ng-click="archive()" value="remove completed"/>
-		</form>
-		</div>
-	</div>
-</section>
-
-<section>
- 	<h2>MVC and MVVM</h2>
-	<img src="images/mvvm.png">
-</section>
 
 <section>
  	<h2>Single page application</h2> 
@@ -509,28 +556,30 @@ $routeProvider.when('/demo/upload',
 });</code></pre>
 </section>
 
+
 <section>
- 	<h2>Testing</h2>
- 	Karma...
+    <h2>Validation</h2>
+    <div ng-controller="DemoController">
+    <div ng-form="simpleForm" class="row">
+        <div class="span12">
+            <input type="email" ng-model="user.email" placeholder="Valid email address"/>
+        </div>
+        <br>
+         <div class="span12">
+            <span class="label label-info" style="padding:.2em .6em .3em" ng-show="simpleForm.$dirty">Dirty</span>
+            <span class="label label-info" style="padding:.2em .6em .3em" ng-show="simpleForm.$valid">Valid</span>
+        </div>
+     </div>
+    </div>  
 </section>
 
 
 <section>
- 	<h2>Validation</h2>
- 	<div ng-controller="DemoController">
- 	<div ng-form="simpleForm" class="row">
-        <div class="span12">
-        	<input type="email" ng-model="user.email" placeholder="Valid email address"/>
-		</div>
-		<br>
-		 <div class="span12">
-	        <span class="label label-info" style="padding:.2em .6em .3em" ng-show="simpleForm.$dirty">Dirty</span>
-	        <span class="label label-info" style="padding:.2em .6em .3em" ng-show="simpleForm.$valid">Valid</span>
-        </div>
-     </div>
-  	</div>
-
- 	
+ 	<h2>Testing</h2>
+ 	<p class="fragment">:) Seperation of concerns.</p>
+    <p class="fragment">:) Karma a test tool built around AngularJS.</p>
+    <p class="fragment">:( Over complex to configure</p>
+    <p class="fragment">:( Testing requires preinstalled tools and gems.</p>
 </section>
 
 
