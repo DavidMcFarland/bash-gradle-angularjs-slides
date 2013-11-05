@@ -50,7 +50,7 @@
 
 <section>
 	<h2>About this talk</h2>
-	<img src="images/doubleAct.jpeg">
+	<img  src="images/doubleAct.jpeg">
 </section>
 
 <section>
@@ -130,6 +130,11 @@
 &lt;/project&gt;</code></pre>
 </section>
 
+<section>
+    <h2>Maven File Convention</h2>
+    <img style="height:260px;width:300px" src="images/maven-file.png"/>
+</section>
+
 
 <section>
     <h2>Maven repository layout</h2>
@@ -200,6 +205,32 @@ dependencies {
 
 
 <section>
+    <h2>Additional source sets</h2>
+    <pre><code data-trim contenteditable>
+sourceSets {
+    migration {
+        compileClasspath += sourceSets.main.runtimeClasspath
+    }
+    integrationTest {
+        compileClasspath += sourceSets.test.runtimeClasspath
+    }
+}
+
+dependencies {
+    migrationCompile 'net.sourceforge.jtds:jtds:1.3.1'
+}
+
+}</code></pre>
+</section>
+
+
+<section>
+    <h2>Polyglot</h2>
+    <img  style="height:526px;width:300px" src="images/polyglot.png"/>
+</section>
+
+
+<section>
     <h2>Building a jar containing all dependencies</h2>
 	<pre><code data-trim contenteditable>
 jar {
@@ -251,26 +282,6 @@ task transform {
             destFile.text = "$name -> ${height}\n"
         }
     }
-}</code></pre>
-</section>
-
-
-<section>
-    <h2>Additional source sets</h2>
-	<pre><code data-trim contenteditable>
-sourceSets {
-    migration {
-        compileClasspath += sourceSets.main.runtimeClasspath
-    }
-    integrationTest {
-    	compileClasspath += sourceSets.test.runtimeClasspath
-    }
-}
-
-dependencies {
-	migrationCompile 'net.sourceforge.jtds:jtds:1.3.1'
-}
-
 }</code></pre>
 </section>
 
@@ -381,6 +392,64 @@ $( "#foo" ).bind( "mouseenter mouseleave", function() {
     <img style="border: none; background: white;box-shadow:none;" src="images/angularjs-logo.png"/>
 </section>
 
+<section ng-controller="DemoController">
+    <h2>Two way bindings</h2>
+    <input type="number" ng-model="number1" placeholder="Enter a number">
+    <label> + </label>
+    <input type="number" ng-model="number2" placeholder="Enter a number">
+    <label> = </label>
+    {{number1 + number2}}
+
+    <pre><code data-trim contenteditable>
+&lt;input type=&quot;number&quot; ng-model=&quot;number1&quot; placeholder=&quot;Enter a number&quot;&gt;
+&lt;label&gt; + &lt;/label&gt;
+&lt;input type=&quot;number&quot; ng-model=&quot;number2&quot; placeholder=&quot;Enter a number&quot;&gt;
+&lt;label&gt; = &lt;/label&gt;
+{&zwnj;{number1 + number2}&zwnj;} &lt;!--Angular Markup--&gt;</code></pre>
+</section>
+
+
+<section>
+<h2>Todo List</h2>
+    <div ng-controller="DemoController">
+        <div>
+            <span>Filter By:</span> 
+            <input type="text" ng-model="search" placeholder="filter">
+        </div>
+        <div>
+            <ul class="unstyled" style="list-style: none">
+            <li ng-repeat="todo in todos | filter:search" ng-animate="'animate'">
+                <input type="checkbox" ng-model="todo.done" ng-animate="'rotate'">
+                <span class="done-{{todo.done}}">{{todo.text}}</span>
+            </li>
+            </ul>
+        </div>      
+    </div>
+</section>
+
+<section ng-controller="DemoController">
+    <h2>ng-repeat directive and filters</h2>
+    <pre><code data-trim contenteditable>
+&lt;div&gt;
+    &lt;span&gt;Filter By:&lt;/span&gt; 
+    &lt;input type=&quot;text&quot; ng-model=&quot;search&quot; placeholder=&quot;filter&quot;&gt;
+&lt;/div&gt;
+&lt;div&gt;
+    &lt;ul class=&quot;unstyled&quot; style=&quot;list-style: none&quot;&gt;
+    &lt;li ng-repeat=&quot;todo in todos | filter:search&quot; ng-animate=&quot;'animate'&quot;&gt;
+        &lt;input type=&quot;checkbox&quot; ng-model=&quot;todo.done&quot; ng-animate=&quot;'rotate'&quot;&gt;
+        &lt;span class=&quot;done-{{todo.done}}&quot;&gt;{{todo.text}}&lt;/span&gt;
+    &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;/</code></pre>
+
+    <pre><code data-trim contenteditable>
+$scope.todos = [
+    {text:'get on plane', done:true},
+    {text:'visit tibet', done:false},
+    {text:'find the blue sheep', done:false},
+    {text:'take picture of blue sheep', done:false}];</code></pre>
+</section>
 
 
 <section ng-controller="DemoController">
@@ -394,57 +463,10 @@ $( "#foo" ).bind( "mouseenter mouseleave", function() {
 </section>
 
 
-<section>
- 	<h2>Templates</h2>
-	<pre><code data-trim contenteditable>
-&lt;html ng-app&gt;
- 	&lt;body ng-controller=&quot;DemoController&quot;&gt;
-   		&lt;input ng-model=&quot;name&quot; placeholder=&quot;Enter name&quot;/&gt;
-   		&lt;button ng-click=&quot;generateRandomName()&quot;/&gt;
-   		&lt;script src=&quot;angular.js&quot;/&gt;
-	&lt;/body&gt;
-&lt;/html&gt;</code></pre>
-</section>
-
-<section>
- 	<h2>Directives</h2>
-</section>
 
 
-<section ng-controller="DemoController">
- 	<h2>Two way bindings</h2>
-    <input type="number" ng-model="number1" placeholder="Enter a number">
-    <label> + </label>
-    <input type="number" ng-model="number2" placeholder="Enter a number">
-    <label> = </label>
-    {{number1 + number2}}
-
-	<pre><code data-trim contenteditable>
-&lt;input type=&quot;number&quot; ng-model=&quot;number1&quot; placeholder=&quot;Enter a number&quot;&gt;
-&lt;label&gt; + &lt;/label&gt;
-&lt;input type=&quot;number&quot; ng-model=&quot;number2&quot; placeholder=&quot;Enter a number&quot;&gt;
-&lt;label&gt; = &lt;/label&gt;
-{&zwnj;{number1 + number2}&zwnj;} //Angular Markup</code></pre>
-</section>
 
 
-<section>
-<h2>Todo list Filter</h2>
-	<div ng-controller="DemoController">
-		<div class="box">
-		<span>Filter By:</span> 
-		<input type="text" ng-model="search" placeholder="filter">
-		</div>
-		<div>
-		<ul class="unstyled" style="list-style: none">
-		<li ng-repeat="todo in todos | filter:search" ng-animate="'animate'">
-			<input type="checkbox" ng-model="todo.done" ng-animate="'rotate'">
-			<span class="done-{{todo.done}}">{{todo.text}}</span>
-		</li>
-		</ul>
-		</div>		
-	</div>
-</section>
 
 <section>
 <h2>Todo list</h2>
@@ -513,6 +535,7 @@ $routeProvider.when('/demo/upload',
 
 
 <section>
+    <img src="images/bluesheep.jpg"/>
     <h1>THE END</h1>
 </section>
 
