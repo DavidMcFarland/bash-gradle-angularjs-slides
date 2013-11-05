@@ -318,6 +318,27 @@ document.getElementsByName("box")
 document.getElementsByTag("TR")</code></pre>
 </section>
 
+<section>
+	<h2>Early DOM manipulation (cont.)</h2>
+	<h3>What does this print?</h3>
+	<pre><code data-trim contenteditable>
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;script&gt;
+            function func() {
+                var stuff = document.getElementById(&quot;myDiv&quot;);
+                console.log(stuff.childNodes[1].innerHTML);
+            }
+        &lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body onload=&quot;func()&quot;&gt;
+        &lt;div id=&quot;myDiv&quot;&gt;
+            &lt;p&gt;Fred&lt;/p&gt;
+            &lt;p&gt;Wilma&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</section>
 
 <section>
     <h2>Early DOM manipulation (cont.)</h2>
@@ -451,7 +472,8 @@ $( "#foo" ).bind( "mouseenter mouseleave", function() {
 </section>
 
 <section>
- 	<h2>MVC</h2>
+ 	<h2>MVC and MVVM</h2>
+	<img src="images/mvvm.png">
 </section>
 
 <section>
